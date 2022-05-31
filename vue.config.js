@@ -9,12 +9,15 @@ module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
   outputDir: 'dist-production',
-  configureWebpack: {
-    resolve: {
-      alias: {
-        '@': resolve('src'),
-      },
-      extensions: ['*', '.js', '.vue', 'ts'],
-    },
+  configureWebpack: (config) => {
+    config.resolve.alias = { '@': resolve('src') };
+    config.resolve.extensions = ['*', '.js', '.vue', '.ts'];
+    if (process.env.NODE_ENV === 'development') {
+      console.log(process.env.VUE_APP_MODE);
+      config.target = 'web';
+    }
+  },
+  devServer: {
+    hot: true,
   },
 });
