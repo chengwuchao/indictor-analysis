@@ -18,14 +18,14 @@ const routesConfig: Array<IndictorAnalysisRouteRecordRaw> = [
         path: '/dashboard',
         name: 'dashboard',
         meta: {
-          keepAlive: true,
+          keepAlive: true, // 暂未使用
           label: 'Dashboard',
         },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-          import(/* webpackChunkName: "about" */ '@/views/AboutView.vue'),
+          import(/* webpackChunkName: "about" */ '@/views/dashboard/index.vue'),
       },
     ],
   },
