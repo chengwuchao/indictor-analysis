@@ -1,6 +1,18 @@
-// eslint-disable-next-line vue/multi-word-component-names
 <template>
-  <div class="about">
-    <h1>This Is Dashboard Page Content</h1>
-  </div>
+  <el-card shadow="always" :body-style="{ padding: '20px' }">
+    <template v-slot:header>
+      <div>
+        <span>{{ message }}</span>
+      </div>
+    </template>
+    <!-- card body -->
+  </el-card>
 </template>
+
+<script lang="ts">
+import { Vue } from 'vue-class-component';
+
+export default class DashboardIndex extends Vue {
+  message = '33444';
+}
+</script>

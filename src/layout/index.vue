@@ -1,5 +1,5 @@
 <template>
-  <el-container class="layout-container-demo">
+  <el-container class="layout-container">
     <!-- left menu -->
     <el-aside width="200px">
       <el-scrollbar>
@@ -12,9 +12,7 @@
       <el-header style="text-align: right; font-size: 12px">
         <div class="toolbar">
           <el-dropdown>
-            <el-icon style="margin-right: 8px; margin-top: 1px"
-              ><setting
-            /></el-icon>
+            <el-icon style="margin-right: 8px; margin-top: 1px"><setting /></el-icon>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>View</el-dropdown-item>
@@ -40,46 +38,28 @@
   </el-container>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import NavMenu from './navMenu.vue';
-
-@Options({
-  components: {
-    NavMenu,
-  },
-})
-export default class Index extends Vue {
-  get key() {
-    return this.$route.fullPath;
-  }
-  get routeMeta() {
-    console.log(this.$route.meta);
-    return this.$route.meta || {};
-  }
-}
-</script>
+<script lang="ts" src="./index.ts"></script>
 
 <style lang="scss" scoped>
-.layout-container-demo .el-header {
+.layout-container .el-header {
   position: relative;
   background-color: #fff;
   color: var(--el-text-color-primary);
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
 }
-.layout-container-demo .el-aside {
+.layout-container .el-aside {
   color: var(--el-text-color-primary);
   background: var(--el-color-primary-light-8);
 }
-.layout-container-demo :deep .el-menu {
+.layout-container :deep .el-menu {
   border-right: none;
   height: 100vh;
   min-height: 500px;
 }
-.layout-container-demo .el-main {
-  padding: 0;
+.layout-container .el-main {
+  padding: 24px 32px;
 }
-.layout-container-demo .toolbar {
+.layout-container .toolbar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
