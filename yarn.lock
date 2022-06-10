@@ -1065,6 +1065,23 @@
   resolved "https://registry.npmmirror.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@iconify-icons/ep@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.npmmirror.com/@iconify-icons/ep/-/ep-1.2.6.tgz#e8c61b4a735d7c052df130762387f1093cdea865"
+  integrity sha512-ljfg+Um/5Y4KWv3LTyWPBzYFfV+eDuH/XgxenCLtMW03xYoF2d1X0UqFlQ5DU2L2rL7lRAmWzjhUE78bWf5d7A==
+  dependencies:
+    "@iconify/types" "^1.1.0"
+
+"@iconify/types@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmmirror.com/@iconify/types/-/types-1.1.0.tgz#dc15fc988b1b3fd558dd140a24ede7e0aac11280"
+  integrity sha512-Jh0llaK2LRXQoYsorIH8maClebsnzTcve+7U3rQUSnC11X4jtPnFuyatqFLvMxZ8MLG8dB4zfHsbPfuvxluONw==
+
+"@iconify/vue@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.npmmirror.com/@iconify/vue/-/vue-3.2.1.tgz#bd8a2f1213ba8775d4b7a7a8ba895e53ae2f4dfc"
+  integrity sha512-c4R6ZgFo1JrJ8aPMMgOPgfU7lBswihMGR+yWe/P4ZukC3kTkeT4+lkt9Pc/itVFMkwva/S/7u9YofmYv57fnNQ==
+
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
   resolved "https://registry.npmmirror.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz#e5d2e450306a9491e3bd77e323e38d7aff315996"

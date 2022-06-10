@@ -3,6 +3,7 @@
     <template v-slot:header>
       <div>
         <span>{{ message }}</span>
+        <Icon icon="ep:arrow-down" />
       </div>
     </template>
     <!-- card body -->
@@ -13,6 +14,6 @@
 import { Vue } from 'vue-class-component';
 
 export default class DashboardIndex extends Vue {
-  message = '33444';
+  message = '1111';
 }
 </script>
