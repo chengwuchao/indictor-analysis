@@ -1,64 +1,24 @@
 <template>
-  <el-card shadow="always" :body-style="{ padding: '20px' }">
-    <!-- card body -->
-    <div class="container">
-      <vue-tree
-        style="width: 1000px; height: 600px; border: 1px solid gray"
-        :dataset="richMediaData"
-        :config="treeConfig"
-        ref="vueTreeRef"
-      >
-        <template v-slot:node="{ node, collapsed, index }">
-          <div
-            class="rich-media-node"
-            @click="onClickNode(node, index)"
-            :style="{ border: collapsed ? '2px solid grey' : '' }"
-          >
-            <span style="padding: 4px 0; font-weight: bold">{{ node.name }}</span>
-          </div>
-        </template>
-      </vue-tree>
-    </div>
-  </el-card>
+  <div>
+    <el-card shadow="always" :body-style="{ padding: '20px' }">
+      <!-- card body -->
+      <el-button @click="show = true">显示 Dialog</el-button>
+    </el-card>
+    <IndictorsDialog v-model:show="show" />
+  </div>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component';
-import data, { TreeNode } from './data';
+import { Options, Vue } from 'vue-class-component';
+import IndictorsDialog from './dialog.vue';
 
+@Options({
+  components: {
+    IndictorsDialog,
+  },
+})
 export default class DashboardIndex extends Vue {
-  richMediaData: TreeNode = {} as TreeNode;
-  treeConfig = { nodeWidth: 120, nodeHeight: 80, levelHeight: 200 };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onClickNode(node: any, index: string | number) {
-    console.log([node, index]);
-    console.log(this.$refs.vueTreeRef);
-    // this.richMediaData = this.richMediaData2 as any;
-  }
-
-  formatTreeData(node: TreeNode) {
-    if (node == null) {
-      return;
-    }
-
-    if (node.children && node.children.length) {
-      // 复制 node.children
-      node._children = JSON.parse(JSON.stringify(node.children));
-      node.children = undefined;
-      node._collapsed = true;
-      if (node._children) {
-        node._children.forEach((child) => {
-          this.formatTreeData(child);
-        });
-      }
-    }
-  }
-
-  beforeMount() {
-    this.formatTreeData(data);
-    this.richMediaData = data;
-  }
+  show = false;
 }
 </script>
 
