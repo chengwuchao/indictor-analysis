@@ -6,6 +6,7 @@ import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import '@/styles/index.scss';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import VueTree from '@/components/vue-tree';
 import Icon from '@/assets/icons';
 import 'normalize.css/normalize.css';
 
@@ -16,6 +17,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
+app.component('vue-tree', VueTree);
 app.use(ElementPlus);
 app.use(Icon);
 app.use(store).use(router).mount('#app');
