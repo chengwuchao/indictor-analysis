@@ -9,8 +9,8 @@
           @click="onClickNode(index)"
           :key="node.data._key"
           :style="{
-            left: formatDimension(direction === Direction.VERTICAL ? node.x : node.y),
-            top: formatDimension(direction === Direction.VERTICAL ? node.y : node.x),
+            left: formatDimension(direction === DirectionEnums.VERTICAL ? node.x : node.y),
+            top: formatDimension(direction === DirectionEnums.VERTICAL ? node.y : node.x),
             width: formatDimension(config.nodeWidth),
             height: formatDimension(config.nodeHeight),
           }"
@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import TreeChartCore, {
   DEFAULT_NODE_WIDTH,
   DEFAULT_NODE_HEIGHT,
@@ -34,8 +34,53 @@ import TreeChartCore, {
   Direction,
   TreeDataset,
 } from '@ssthouse/tree-chart-core';
-import { Vue } from 'vue-class-component';
-import { Prop, Watch } from 'vue-property-decorator';
+import { defineProps, toRefs, onBeforeUnmount, onMounted, ref, defineExpose, reactive, unref } from 'vue';
+
+const props = defineProps({
+  config: {
+    type: Object,
+    default: () => {
+      return {
+        nodeWidth: DEFAULT_NODE_WIDTH,
+        nodeHeight: DEFAULT_NODE_HEIGHT,
+        levelHeight: DEFAULT_LEVEL_HEIGHT,
+      };
+    },
+  },
+  linkStyle: {
+    type: String,
+    default: TreeLinkStyle.CURVE,
+  },
+  direction: {
+    type: String,
+    default: Direction.VERTICAL,
+  },
+  collapseEnabled: {
+    type: Boolean,
+    default: true,
+  },
+  dataset: {
+    type: [Object, Array],
+    default: () => {
+      return {};
+    },
+  },
+});
+
+const DirectionEnums = ref(Direction);
+const svg = ref(null);
+const domContainer = ref(null);
+const container = ref(null);
+
+let state = reactive<{
+  treeChartCore: any;
+  nodeDataList: any;
+  initialTransformStyle: {};
+}>({
+  treeChartCore: {},
+  nodeDataList: [],
+  initialTransformStyle: {},
+});
 
 const formatDimension = (dimension: string | number) => {
   if (typeof dimension === 'number') return `${dimension}px`;
@@ -46,88 +91,60 @@ const formatDimension = (dimension: string | number) => {
   }
 };
 
-export default class VueTree extends Vue {
-  @Prop({
-    default: () => {
-      return {
-        nodeWidth: DEFAULT_NODE_WIDTH,
-        nodeHeight: DEFAULT_NODE_HEIGHT,
-        levelHeight: DEFAULT_LEVEL_HEIGHT,
-      };
-    },
-  })
-  config!: object;
+// @Watch('dataset', { deep: true })
+// updateDataSet() {
+//   treeChartCoreValue.updateDataset(this.dataset);
+//   this.nodeDataList = this.treeChartCore.getNodeDataList();
+// }
 
-  @Prop({
-    default: TreeLinkStyle.CURVE,
-  })
-  linkStyle!: TreeLinkStyle;
-
-  @Prop({
-    default: Direction.VERTICAL,
-  })
-  direction!: Direction;
-
-  @Prop({ default: true })
-  collapseEnabled!: boolean;
-
-  @Prop()
-  dataset!: object | [];
-
-  formatDimension = formatDimension;
-  Direction = Direction;
-  treeChartCore: TreeChartCore = {} as unknown as TreeChartCore;
-  nodeDataList: unknown[] = [];
-  initialTransformStyle = {};
-
-  @Watch('dataset', { deep: true })
-  updateDataSet() {
-    this.treeChartCore.updateDataset(this.dataset);
-    this.nodeDataList = this.treeChartCore.getNodeDataList();
-  }
-
-  init() {
-    this.treeChartCore = new TreeChartCore({
-      svgElement: this.$refs.svg as SVGElement,
-      domElement: this.$refs.domContainer as HTMLDivElement,
-      treeContainer: this.$refs.container as HTMLDivElement,
-      dataset: this.dataset as TreeDataset,
-      direction: this.direction as Direction,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      treeConfig: this.config as any,
-      collapseEnabled: this.collapseEnabled,
-      linkStyle: this.linkStyle as TreeLinkStyle,
-    });
-    this.treeChartCore.init();
-    this.nodeDataList = this.treeChartCore.getNodeDataList();
-    this.initialTransformStyle = this.treeChartCore.getInitialTransformStyle();
-  }
-  updateDataset(dataset: TreeDataset) {
-    this.treeChartCore.updateDataset(dataset);
-  }
-  zoomIn() {
-    this.treeChartCore.zoomIn();
-  }
-  zoomOut() {
-    this.treeChartCore.zoomOut();
-  }
-  restoreScale() {
-    this.treeChartCore.setScale(1);
-  }
-  onClickNode(index: number) {
-    this.treeChartCore.onClickNode(index);
-    this.nodeDataList = this.treeChartCore.getNodeDataList();
-  }
-
-  mounted() {
-    this.init();
-    console.log(JSON.parse(JSON.stringify(this.dataset)));
-  }
-  beforeUnmount() {
-    // remove dom reference
-    this.treeChartCore.destroy();
-  }
+function init() {
+  state.treeChartCore = new TreeChartCore({
+    svgElement: svg.value as unknown as SVGAElement,
+    domElement: domContainer.value as unknown as HTMLDivElement,
+    treeContainer: container.value as unknown as HTMLDivElement,
+    dataset: props.dataset as TreeDataset,
+    direction: props.direction as Direction,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    treeConfig: props.config as any,
+    collapseEnabled: props.collapseEnabled,
+    linkStyle: props.linkStyle as TreeLinkStyle,
+  });
+  state.treeChartCore.init();
+  state.nodeDataList = state.treeChartCore.getNodeDataList();
+  state.initialTransformStyle = state.treeChartCore.getInitialTransformStyle();
 }
+function updateDataset(dataset: TreeDataset) {
+  state.treeChartCore.updateDataset(dataset);
+}
+function zoomIn() {
+  state.treeChartCore.zoomIn();
+}
+function zoomOut() {
+  state.treeChartCore.zoomOut();
+}
+function restoreScale() {
+  state.treeChartCore.setScale(1);
+}
+function onClickNode(index: number) {
+  state.treeChartCore.onClickNode(index);
+  state.nodeDataList = state.treeChartCore.getNodeDataList();
+}
+
+onMounted(() => {
+  init();
+});
+
+onBeforeUnmount(() => {
+  state.treeChartCore.destroy();
+});
+
+defineExpose({
+  updateDataset,
+  zoomIn,
+  zoomOut,
+  restoreScale,
+  onClickNode,
+});
 </script>
 
 <style lang="scss">

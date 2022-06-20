@@ -1,0 +1,15 @@
+diff --git a/node_modules/@ssthouse/tree-chart-core/build/tree-chart/index.js b/node_modules/@ssthouse/tree-chart-core/build/tree-chart/index.js
+index dc18ad8..bee6384 100644
+--- a/node_modules/@ssthouse/tree-chart-core/build/tree-chart/index.js
++++ b/node_modules/@ssthouse/tree-chart-core/build/tree-chart/index.js
+@@ -9,8 +9,8 @@ var TreeChartCore = /** @class */ (function () {
+             nodeHeight: DEFAULT_NODE_HEIGHT,
+             levelHeight: DEFAULT_LEVEL_HEIGHT,
+         };
+-        this.linkStyle = TreeLinkStyle.CURVE;
+-        this.direction = Direction.VERTICAL;
++        this.linkStyle = params.linkStyle || TreeLinkStyle.CURVE;
++        this.direction =  params.direction || Direction.VERTICAL;
+         this.collapseEnabled = true;
+         this.currentScale = 1;
+         if (params.treeConfig) {

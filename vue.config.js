@@ -10,7 +10,8 @@ function resolve(dir) {
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
-  outputDir: 'dist-production',
+  assetsDir: 'assets',
+  publicPath: './',
   devServer: {
     hot: true,
   },

@@ -8,18 +8,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+<script lang="ts" setup>
+import { ref } from 'vue-demi';
 import IndictorsDialog from './dialog.vue';
 
-@Options({
-  components: {
-    IndictorsDialog,
-  },
-})
-export default class DashboardIndex extends Vue {
-  show = false;
-}
+const show = ref<boolean>(false);
 </script>
 
 <style scoped lang="scss">
