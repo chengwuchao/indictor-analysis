@@ -1,11 +1,5 @@
 <template>
-  <el-dialog
-    :model-value="dialogVisible"
-    title="Tips"
-    width="90%"
-    :before-close="handleClose"
-    :close-on-click-modal="false"
-  >
+  <el-dialog :model-value="show" title="Tips" width="90%" :before-close="handleClose" :close-on-click-modal="false">
     <div class="container" v-if="showTree">
       <vue-tree
         @click="clickDialog"
@@ -38,113 +32,37 @@
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component';
-import { Emit, PropSync, Watch } from 'vue-property-decorator';
-import data, { TreeNode } from './data';
-
-declare global {
-  interface Window {
-    mouseEvent: MouseEvent;
-    analytics: any;
-  }
-}
-
-interface Contextstyle {
-  top: string;
-  left: string;
-  right: string;
-  bottom?: string;
-  display: string;
-}
+import { Emit, Prop, Ref, Vue, Watch } from 'vue-property-decorator';
 
 export default class IndictorsDialog extends Vue {
-  @PropSync('show', { default: false }) dialogVisible!: boolean;
+  @Prop({ type: Boolean, default: false }) show!: boolean;
 
-  @Watch('show', { immediate: true })
-  showChanged(newVal: boolean) {
-    if (newVal) {
-      this.$nextTick(() => {
-        this.showTree = true;
-      });
-    }
-  }
-
-  richMediaData: TreeNode = {} as TreeNode;
-  treeConfig = { nodeWidth: 120, nodeHeight: 45, levelHeight: 200 };
+  richMediaData = null;
+  treeConfig = { nodeWidth: 180, nodeHeight: 80, levelHeight: 200 };
   showTree = false;
-  contextstyle: Contextstyle = {
-    display: 'none',
-    right: '0px',
-    top: '0px',
-    left: '0px',
-    bottom: '0px',
+  curNode = null;
+  curNodeIndex = 0;
+  categoryItem = null;
+  formInline = {
+    dateRange: [],
+    institution: '',
+    channel: '',
+    product: '',
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onClickNode(evt: MouseEvent, node: any, index: string | number) {
-    console.log([node, index]);
-    console.log(evt);
-    console.log(window);
-    if (evt.x + 188 > document.documentElement.clientWidth) {
-      this.contextstyle.left = 'unset';
-      this.contextstyle.right = document.documentElement.clientWidth - evt.x + 'px';
-    } else {
-      this.contextstyle.left = evt.x + 'px';
-    }
-    if (evt.y + 166 > document.documentElement.clientHeight) {
-      this.contextstyle.top = 'unset';
-      this.contextstyle.bottom = document.documentElement.clientHeight - evt.y + 'px';
-    } else {
-      this.contextstyle.top = evt.y + 'px';
-    }
-    this.contextstyle.display = 'block';
+  @Ref('vueTreeRef') vueTreeRef!: any;
 
-    evt.stopPropagation();
-  }
-
-  formatTreeData(node: TreeNode) {
-    if (node == null) {
-      return;
-    }
-
-    if (node.children && node.children.length) {
-      // 复制 node.children
-      node._children = JSON.parse(JSON.stringify(node.children));
-      node.children = undefined;
-      node._collapsed = true;
-      if (node._children) {
-        node._children.forEach((child) => {
-          this.formatTreeData(child);
-        });
-      }
-    }
-  }
+  @Watch('show', { immediate: true })
+  showChange(newVal, oldVal) {}
 
   @Emit('update:show')
-  handleClose() {
+  updateShow() {
     return false;
   }
 
-  clickDialog() {
-    if (this.contextstyle.display == 'block') {
-      this.contextstyle.display = 'none';
-    }
+  handleClose() {
+    this.updateShow();
   }
-
-  created() {
-    document.addEventListener('click', (event) => {
-      if (this.contextstyle.display == 'block') {
-        this.contextstyle.display = 'none';
-      }
-    });
-  }
-
-  beforeMount() {
-    this.formatTreeData(data);
-    this.richMediaData = data;
-  }
-
-  mounted() {}
 }
 </script>
 

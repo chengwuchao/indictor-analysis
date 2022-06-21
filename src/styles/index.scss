@@ -1,7 +1,72 @@
+@import url('./variable.scss');
+
+$border-color: #e0e6ec;
+
 body {
-   background-color: ghostwhite;
-}    
+  background-color: ghostwhite;
+}
 
 .el-header {
   height: 54px;
+}
+
+.el-dialog {
+  .el-dialog__header {
+    padding: 0;
+    border-bottom: 1px solid $border-color;
+    height: 55px;
+    line-height: 55px;
+    padding-left: 24px;
+    margin-right: 0;
+    .el-dialog__title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .el-dialog__headerbtn {
+      .el-dialog__close {
+        font-size: 22px;
+      }
+    }
+  }
+
+  .el-dialog__body {
+    padding: 24px;
+    padding-bottom: 1px solid $border-color;
+  }
+
+  .el-dialog__footer {
+    padding: 10px 20px 18px;
+  }
+}
+
+.text-ellipsis {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.strict-text-wrap {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: normal;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  &.wrap-line {
+    &-2 {
+      -webkit-line-clamp: 2;
+    }
+    &-3 {
+      -webkit-line-clamp: 3;
+    }
+    &-4 {
+      -webkit-line-clamp: 4;
+    }
+  }
 }
