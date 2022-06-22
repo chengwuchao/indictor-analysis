@@ -1065,6 +1065,13 @@
   resolved "https://registry.npmmirror.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@iconify-icons/ant-design@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@iconify-icons/ant-design/-/ant-design-1.2.3.tgz#ccef4f825ad402f7adf57da543e4662c84579fbb"
+  integrity sha512-WaLAVKh/WN5MXumV6Y1iInqtxaSlm1vOlJy2vsfITXS4L4/+wR8z6mj4OOVBS2faupCh6e3sFo6DfgJF6boXpw==
+  dependencies:
+    "@iconify/types" "^1.1.0"
+
 "@iconify-icons/ep@^1.2.6":
   version "1.2.6"
   resolved "https://registry.npmmirror.com/@iconify-icons/ep/-/ep-1.2.6.tgz#e8c61b4a735d7c052df130762387f1093cdea865"

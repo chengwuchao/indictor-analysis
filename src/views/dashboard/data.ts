@@ -4,54 +4,28 @@ export interface TreeNode {
   children?: TreeNode[];
   _children?: TreeNode[];
   _collapsed?: boolean;
-  avatar?: string;
+  proportion?: number;
+  growth?: number;
+  categoryList?: any;
 }
 
-const data: TreeNode = {
+export const treeNodeData: TreeNode = {
   name: 'James',
   value: 800,
-  avatar: 'https://gravatar.com/avatar/db51fdaf64d942180b5200ca37d155a4?s=400&d=robohash&r=x',
-  children: [
+  proportion: 0.8,
+  growth: 0.3,
+  categoryList: [
     {
-      name: 'Bob',
-      value: 400,
-      avatar: 'https://gravatar.com/avatar/16b3b886b837257757c5961513396a06?s=400&d=robohash&r=x',
-      children: [
+      value: '1',
+      label: '111',
+      data: [
         {
-          name: 'C1',
-          value: 100,
-          avatar: 'https://gravatar.com/avatar/4ee8775f23f12755db978cccdc1356d9?s=400&d=robohash&r=x',
-        },
-        {
-          name: 'C2',
-          value: 300,
-          avatar: 'https://gravatar.com/avatar/d3efa8fa639bdada96a7d0b4372e0a96?s=400&d=robohash&r=x',
-        },
-        {
-          name: 'C3',
-          value: 200,
-          avatar: 'https://gravatar.com/avatar/4905bc3e5dc51a61e3b490ccf1891107?s=400&d=robohash&r=x',
+          name: '222',
+          value: 400,
+          proportion: 0.34,
+          growth: 0.34,
         },
       ],
-    },
-    {
-      name: 'Smith',
-      value: 200,
-      avatar: 'https://gravatar.com/avatar/d05d081dbbb513180025300b715d5656?s=400&d=robohash&r=x',
-      children: [
-        {
-          name: 'S1',
-          value: 230,
-          avatar: 'https://gravatar.com/avatar/60c1e69e690d943c5dc06568148debc4?s=400&d=robohash&r=x',
-        },
-      ],
-    },
-    {
-      name: 'Jackson',
-      value: 300,
-      avatar: 'https://gravatar.com/avatar/581f7a711c815d9671c35ebd815ec1e4?s=400&d=robohash&r=x',
     },
   ],
 };
-
-export default data;

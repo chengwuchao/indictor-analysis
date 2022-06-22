@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.4",
+    "@iconify-icons/ant-design": "^1.2.3",
     "@iconify-icons/ep": "^1.2.6",
     "@iconify/vue": "^3.2.1",
     "@ssthouse/tree-chart-core": "^1.1.1",

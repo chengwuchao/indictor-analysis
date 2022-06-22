@@ -49,10 +49,10 @@ $spacing-sizes: (
 
 // colors
 @each $colorKey, $color in $colors {
-  .text-#{$colorKey} {
+  .text-#{'' + $colorKey} {
     color: $color;
   }
-  .bg-#{$colorKey} {
+  .bg-#{'' + $colorKey} {
     background: $color;
   }
 }
@@ -61,5 +61,45 @@ $spacing-sizes: (
 @each $var in (left, center, right) {
   .text-#{$var} {
     text-align: $var !important;
+  }
+}
+
+// spacing
+@each $typeKey, $type in $spacing-types {
+  // m- p-
+  @each $sizeKey, $size in $spacing-sizes {
+    .#{$typeKey}-#{$sizeKey} {
+      #{$type}: $size * $spacing-base-size;
+    }
+  }
+
+  // mx-  my-
+  @each $sizeKey, $size in $spacing-sizes {
+    .#{$typeKey}x-#{$sizeKey} {
+      #{$type}-left: $size * $spacing-base-size;
+      #{$type}-right: $size * $spacing-base-size;
+    }
+  }
+
+  // pl- ml
+  @each $directionKey, $direction in $spacing-directions {
+    @each $sizeKey, $size in $spacing-sizes {
+      .#{$typeKey}#{$directionKey}-#{$sizeKey} {
+        #{$type}-#{$direction}: $size * $base-font-size;
+      }
+    }
+  }
+}
+
+$position-types: (
+  float: float,
+  text: text-align,
+);
+
+@each $typeKey, $typeVal in $position-types {
+  @each $val in (left, right) {
+    .#{$typeKey}-#{$val} {
+      #{$typeVal}: $val;
+    }
   }
 }

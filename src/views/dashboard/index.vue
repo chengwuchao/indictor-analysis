@@ -4,7 +4,7 @@
       <!-- card body -->
       <el-button @click="show = true">显示 Dialog</el-button>
     </el-card>
-    <IndictorsDialog v-model:show="show" />
+    <IndictorsDialog v-model:show="show" v-if="show" />
   </div>
 </template>
 

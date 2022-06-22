@@ -1,11 +1,11 @@
 <template>
   <div class="tree-container" ref="container">
-    <svg class="svg vue-tree" ref="svg" :style="initialTransformStyle"></svg>
-    <div class="dom-container" ref="domContainer" :style="initialTransformStyle">
+    <svg class="svg vue-tree" ref="svg" :style="state.initialTransformStyle"></svg>
+    <div class="dom-container" ref="domContainer" :style="state.initialTransformStyle">
       <transition-group name="tree-node-item" tag="div">
         <div
           class="node-slot"
-          v-for="(node, index) of nodeDataList"
+          v-for="(node, index) of state.nodeDataList"
           @click="onClickNode(index)"
           :key="node.data._key"
           :style="{
@@ -16,8 +16,6 @@
           }"
         >
           <slot name="node" v-bind:node="node.data" v-bind:collapsed="node.data._collapsed" v-bind:index="index">
-            <!-- 默认展示value字段 -->
-            <span>{{ node.data.value }}</span>
           </slot>
         </div>
       </transition-group>
@@ -34,7 +32,7 @@ import TreeChartCore, {
   Direction,
   TreeDataset,
 } from '@ssthouse/tree-chart-core';
-import { defineProps, toRefs, onBeforeUnmount, onMounted, ref, defineExpose, reactive, unref } from 'vue';
+import { defineProps, onBeforeUnmount, onMounted, ref, defineExpose, reactive, unref, watch } from 'vue';
 
 const props = defineProps({
   config: {
@@ -82,20 +80,23 @@ let state = reactive<{
   initialTransformStyle: {},
 });
 
-const formatDimension = (dimension: string | number) => {
+function formatDimension(dimension: string | number) {
   if (typeof dimension === 'number') return `${dimension}px`;
   if (dimension.indexOf('px') !== -1) {
     return dimension;
   } else {
     return `${dimension}px`;
   }
-};
+}
 
-// @Watch('dataset', { deep: true })
-// updateDataSet() {
-//   treeChartCoreValue.updateDataset(this.dataset);
-//   this.nodeDataList = this.treeChartCore.getNodeDataList();
-// }
+watch(
+  props.dataset,
+  () => {
+    state.treeChartCore.updateDataset(props.dataset);
+    state.nodeDataList = state.treeChartCore.getNodeDataList();
+  },
+  { deep: true }
+);
 
 function init() {
   state.treeChartCore = new TreeChartCore({
