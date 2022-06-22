@@ -8,7 +8,7 @@ function resolve(dir) {
 }
 
 module.exports = defineConfig({
-  transpileDependencies: true,
+  transpileDependencies: ['vue-echarts', 'resize-detector'],
   lintOnSave: false,
   assetsDir: 'assets',
   publicPath: './',

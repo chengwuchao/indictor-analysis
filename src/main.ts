@@ -8,7 +8,14 @@ import '@/styles/index.scss';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import VueTree from '@/components/vue-tree';
 import Icon from '@/assets/icons';
+import Echarts from 'vue-echarts';
+import { use } from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
+import { BarChart, LineChart, PieChart } from 'echarts/charts';
+import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import 'normalize.css/normalize.css';
+
+use([CanvasRenderer, BarChart, LineChart, LegendComponent, PieChart, GridComponent, TooltipComponent, LegendComponent]);
 
 const app = createApp(App);
 
@@ -17,6 +24,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
+app.component('v-chart', Echarts);
 app.component('vue-tree', VueTree);
 app.use(ElementPlus);
 app.use(Icon);

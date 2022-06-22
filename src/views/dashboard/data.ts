@@ -27,5 +27,23 @@ export const treeNodeData: TreeNode = {
         },
       ],
     },
+    {
+      value: '2',
+      label: '2222',
+      data: [
+        {
+          name: '9999',
+          value: 400,
+          proportion: 0.34,
+          growth: 0.34,
+        },
+        {
+          name: '0000',
+          value: 400,
+          proportion: 0.34,
+          growth: 0.34,
+        },
+      ],
+    },
   ],
 };
