@@ -9,10 +9,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue-demi';
+import { proxyRefs, reactive, ref, toRefs } from 'vue-demi';
 import IndictorsDialog from './dialog.vue';
 
 const show = ref<boolean>(false);
+
+const test = reactive({ x: 1, y: 2 });
+
+console.log(test.x + test.y);
 </script>
 
 <style scoped lang="scss">
