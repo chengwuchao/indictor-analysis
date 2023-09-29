@@ -6,7 +6,7 @@ import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import '@/styles/index.scss';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
-import VueTree from '@/components/vue-tree';
+import  { VueTree } from '@/components';
 import Icon from '@/assets/icons';
 import Echarts from 'vue-echarts';
 import { use } from 'echarts/core';
@@ -25,7 +25,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 app.component('v-chart', Echarts);
-app.component('vue-tree', VueTree);
+app.use(VueTree)
 app.use(ElementPlus);
 app.use(Icon);
 app.use(store).use(router).mount('#app');
