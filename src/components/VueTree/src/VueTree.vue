@@ -1,7 +1,15 @@
 <template>
   <div class="tree-container" ref="container">
-    <svg class="svg vue-tree" ref="svg" :style="state.initialTransformStyle"></svg>
-    <div class="dom-container" ref="domContainer" :style="state.initialTransformStyle">
+    <svg
+      class="svg vue-tree"
+      ref="svg"
+      :style="state.initialTransformStyle"
+    ></svg>
+    <div
+      class="dom-container"
+      ref="domContainer"
+      :style="state.initialTransformStyle"
+    >
       <transition-group name="tree-node-item" tag="div">
         <div
           class="node-slot"
@@ -9,13 +17,22 @@
           @click="onClickNode(index)"
           :key="node.data._key"
           :style="{
-            left: formatDimension(direction === DirectionEnums.VERTICAL ? node.x : node.y),
-            top: formatDimension(direction === DirectionEnums.VERTICAL ? node.y : node.x),
+            left: formatDimension(
+              direction === DirectionEnums.VERTICAL ? node.x : node.y,
+            ),
+            top: formatDimension(
+              direction === DirectionEnums.VERTICAL ? node.y : node.x,
+            ),
             width: formatDimension(config.nodeWidth),
             height: formatDimension(config.nodeHeight),
           }"
         >
-          <slot name="node" v-bind:node="node.data" v-bind:collapsed="node.data._collapsed" v-bind:index="index">
+          <slot
+            name="node"
+            v-bind:node="node.data"
+            v-bind:collapsed="node.data._collapsed"
+            v-bind:index="index"
+          >
           </slot>
         </div>
       </transition-group>
@@ -32,7 +49,16 @@ import TreeChartCore, {
   Direction,
   TreeDataset,
 } from '@ssthouse/tree-chart-core';
-import { defineProps, onBeforeUnmount, onMounted, ref, defineExpose, reactive, unref, watch } from 'vue';
+import {
+  defineProps,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  defineExpose,
+  reactive,
+  unref,
+  watch,
+} from 'vue';
 
 const props = defineProps({
   config: {
@@ -95,7 +121,7 @@ watch(
     state.treeChartCore.updateDataset(props.dataset);
     state.nodeDataList = state.treeChartCore.getNodeDataList();
   },
-  { deep: true }
+  { deep: true },
 );
 
 function init() {

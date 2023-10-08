@@ -1,87 +1,122 @@
 <template>
-  <el-container class="layout-container">
-    <!-- left menu -->
-    <el-aside width="200px">
-      <el-scrollbar>
-        <NavMenu />
-      </el-scrollbar>
-    </el-aside>
-
-    <el-container>
-      <!-- top -->
-      <el-header style="text-align: right; font-size: 12px">
-        <div class="toolbar">
-          <el-dropdown>
-            <el-icon style="margin-right: 8px; margin-top: 1px"><setting /></el-icon>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>View</el-dropdown-item>
-                <el-dropdown-item>Add</el-dropdown-item>
-                <el-dropdown-item>Delete</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-          <span>Tom</span>
-        </div>
-      </el-header>
-      <!-- main content -->
-      <el-main>
-        <el-scrollbar>
-          <router-view v-slot="{ Component }" :key="key">
-            <transition name="fade-transform">
-              <component :is="Component" />
-            </transition>
-          </router-view>
-        </el-scrollbar>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div
+    :class="classObj"
+    class="app-wrapper"
+    :style="{ '--current-color': theme }"
+  >
+    <div
+      v-if="device === 'mobile' && sidebar.opened"
+      class="drawer-bg"
+      @click="handleClickOutside"
+    />
+    <sidebar
+      class="sidebar-container"
+      :style="{
+        backgroundColor:
+          sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg,
+      }"
+    />
+    <div :class="{ hasTagsView: needTagsView }" class="main-container">
+      <div :class="{ 'fixed-header': fixedHeader }">
+        <navbar />
+        <tags-view v-if="needTagsView" />
+      </div>
+      <app-main />
+      <right-panel v-if="showSettings">
+        <settings />
+      </right-panel>
+    </div>
+  </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import NavMenu from './navMenu.vue';
+<script lang="ts" setup>
+import RightPanel from '@/components/RightPanel';
+import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components';
+import ResizeMixin from './mixin/ResizeHandler';
+import { mapState } from 'vuex';
+import variables from '@/assets/styles/variables.scss';
 
-@Options({
+export default {
+  name: 'Layout',
   components: {
-    NavMenu,
+    AppMain,
+    Navbar,
+    RightPanel,
+    Settings,
+    Sidebar,
+    TagsView,
   },
-})
-export default class Index extends Vue {
-  get key() {
-    return this.$route.fullPath;
-  }
-  get routeMeta() {
-    console.log(this.$route.meta);
-    return this.$route.meta || {};
-  }
-}
+  mixins: [ResizeMixin],
+  computed: {
+    ...mapState({
+      theme: (state) => state.settings.theme,
+      sideTheme: (state) => state.settings.sideTheme,
+      sidebar: (state) => state.app.sidebar,
+      device: (state) => state.app.device,
+      showSettings: (state) => state.settings.showSettings,
+      needTagsView: (state) => state.settings.tagsView,
+      fixedHeader: (state) => state.settings.fixedHeader,
+    }),
+    classObj() {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened,
+        withoutAnimation: this.sidebar.withoutAnimation,
+        mobile: this.device === 'mobile',
+      };
+    },
+    variables() {
+      return variables;
+    },
+  },
+  methods: {
+    handleClickOutside() {
+      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.layout-container .el-header {
+@import '~@/assets/styles/mixin.scss';
+@import '~@/assets/styles/variables.scss';
+
+.app-wrapper {
+  @include clearfix;
   position: relative;
-  background-color: #fff;
-  color: var(--el-text-color-primary);
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
-}
-.layout-container .el-aside {
-  color: var(--el-text-color-primary);
-  background: var(--el-color-primary-light-8);
-}
-.layout-container :deep .el-menu {
-  border-right: none;
-  height: 100vh;
-  min-height: 500px;
-}
-.layout-container .el-main {
-  padding: 24px 32px;
-}
-.layout-container .toolbar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   height: 100%;
-  right: 20px;
+  width: 100%;
+
+  &.mobile.openSidebar {
+    position: fixed;
+    top: 0;
+  }
+}
+
+.drawer-bg {
+  background: #000;
+  opacity: 0.3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  width: calc(100% - #{$sideBarWidth});
+  transition: width 0.28s;
+}
+
+.hideSidebar .fixed-header {
+  width: calc(100% - 54px);
+}
+
+.mobile .fixed-header {
+  width: 100%;
 }
 </style>

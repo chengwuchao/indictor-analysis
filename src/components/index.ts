@@ -1,6 +1,3 @@
-import VueTree from './VueTree'
+import VueTree from './VueTree';
 
-export {
-    VueTree
-}
-
+export { VueTree };

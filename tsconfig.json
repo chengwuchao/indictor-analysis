@@ -17,7 +17,9 @@
       "webpack-env",
       "mocha",
       "chai",
-      "element-plus/global"
+      "element-plus/global",
+      "node",
+      "js-cookie",
     ],
     "paths": {
       "@/*": [

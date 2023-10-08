@@ -1,24 +1,15 @@
+<template></template>
 
-<template>
- 
+<script lang="ts" name="Authority" setup>
+import { defineProps, withDefaults } from 'vue';
 
-</template>
+interface Props {
+  authority?:string;
+}
 
-<script lang="ts" setup>
-import { defineProps } from 'vue'
-
-
-const props = defineProps({
-    authority: {
-        type: String,
-        default: '',
-    }
+const props = withDefaults(defineProps<Props>, {
+  authority: ''
 })
-
-
-
-
-
 
 
 </script>

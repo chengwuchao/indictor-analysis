@@ -1,8 +1,7 @@
-
-import VueTree from './src/VueTree.vue'
+import VueTree from './src/VueTree.vue';
 
 export default {
-    install: (Vue: any) => {
-        Vue.component('vue-tree', VueTree);
-    }
-}
+  install: (Vue: any) => {
+    Vue.component('vue-tree', VueTree);
+  },
+};
