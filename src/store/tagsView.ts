@@ -6,12 +6,12 @@ interface ViewItem {
   meta: any;
 }
 
-interface TagsView {
+interface State {
   visitedViews: ViewItem[];
   cachedViews: string[];
 }
 
-const initState = (): TagsView => {
+const initState = (): State => {
   return {
     visitedViews: [],
     cachedViews: [],

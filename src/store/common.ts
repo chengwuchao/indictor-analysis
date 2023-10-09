@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia';
 
-interface CommonState {
+interface State {
   size: string | number;
+  permission_routes: any[];
 }
 
-const initState = (): CommonState => {
+const initState = (): State => {
   return {
     size: '',
+    permission_routes: [],
   };
 };
 
@@ -15,6 +17,7 @@ export const useCommonStore = defineStore({
   state: () => initState(),
   getters: {
     size: (state) => state.size,
+    permission_routes: (state) => state.permission_routes,
   },
   actions: {
     setSize(size: string) {

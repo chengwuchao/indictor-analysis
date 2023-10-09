@@ -3,7 +3,7 @@ import { LoginForm } from '@/types/login';
 import { getToken, removeToken, setToken } from '@/utils/auth';
 import { defineStore } from 'pinia';
 
-interface UserState {
+interface State {
   token: string | undefined;
   name: string;
   avatar: string;
@@ -11,7 +11,7 @@ interface UserState {
   permissions: Array<string>;
 }
 
-const initState = (): UserState => {
+const initState = (): State => {
   return {
     token: getToken(),
     name: '',

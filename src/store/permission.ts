@@ -1,15 +1,15 @@
 import { getRouters } from '@/api/menu';
 import { defineStore } from 'pinia';
-import Layout from '@/layout/index';
-import ParentView from '@/components/ParentView';
+import Layout from '@/layout/index.vue';
+import ParentView from '@/components/ParentView.vue';
 
-interface PermissionState {
+interface State {
   routes: Array<string>;
   addRoutes: Array<any>;
   sidebarRouters: Array<any>;
 }
 
-const initState = (): PermissionState => {
+const initState = (): State => {
   return {
     routes: [],
     addRoutes: [],
